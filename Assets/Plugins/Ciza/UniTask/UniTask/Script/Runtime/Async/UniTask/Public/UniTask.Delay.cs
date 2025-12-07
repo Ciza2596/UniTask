@@ -8,6 +8,11 @@ namespace CizaUniTask
 {
 	public readonly partial struct UniTask
 	{
+		public static YieldAwaitable Yield(CancellationToken token, PlayerLoopTiming timing = PlayerLoopTiming.Update)
+		{
+			return new(timing, token);
+		}
+
 		public static YieldAwaitable Yield(PlayerLoopTiming timing = PlayerLoopTiming.Update, AsyncToken token = default)
 		{
 			return new(timing, token);
@@ -50,7 +55,7 @@ namespace CizaUniTask
 			private readonly int delayFrameCount;
 			private int currentFrameCount;
 
-			public DelayFramePromise(int delayFrameCount, PlayerLoopTiming timing, CancellationToken cancellationToken) : base(timing, cancellationToken, 2)
+			public DelayFramePromise(int delayFrameCount, PlayerLoopTiming timing, CancellationToken cancellationToken) : base(timing, cancellationToken)
 			{
 				this.delayFrameCount = delayFrameCount;
 				currentFrameCount = 0;
@@ -87,7 +92,7 @@ namespace CizaUniTask
 			private readonly float delayFrameTimeSpan;
 			private float elapsed;
 
-			public DelayPromise(TimeSpan delayFrameTimeSpan, PlayerLoopTiming timing, CancellationToken cancellationToken) : base(timing, cancellationToken, 2)
+			public DelayPromise(TimeSpan delayFrameTimeSpan, PlayerLoopTiming timing, CancellationToken cancellationToken) : base(timing, cancellationToken)
 			{
 				this.delayFrameTimeSpan = (float)delayFrameTimeSpan.TotalSeconds;
 			}
@@ -123,7 +128,7 @@ namespace CizaUniTask
 			private readonly float delayFrameTimeSpan;
 			private float elapsed;
 
-			public DelayIgnoreTimeScalePromise(TimeSpan delayFrameTimeSpan, PlayerLoopTiming timing, CancellationToken cancellationToken) : base(timing, cancellationToken, 2)
+			public DelayIgnoreTimeScalePromise(TimeSpan delayFrameTimeSpan, PlayerLoopTiming timing, CancellationToken cancellationToken) : base(timing, cancellationToken)
 			{
 				this.delayFrameTimeSpan = (float)delayFrameTimeSpan.TotalSeconds;
 			}
